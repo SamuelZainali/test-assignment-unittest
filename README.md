@@ -17,7 +17,7 @@ När ni har klonat ner repot och skapat ert eget repo behöver ni köra följand
 - npm i
 - npx parcel src/index.html
 
-Där det sista kommandot kommer att sätta igång applikationen så att ni kan surfa och titta på den. 
+Där det sista kommandot kommer att sätta igång applikationen så att ni kan surfa och titta på den.
 
 ## Er uppgift
 

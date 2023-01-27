@@ -21,7 +21,7 @@
     </package>
     <package name="ts.models">
       <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
-      <file name="Todo.ts" path="C:\Users\vikto\Documents\GitHub\medieinstitutet\testning\test-assignment-unittest\src\ts\models\Todo.ts">
+      <file name="Todo.ts" path="C:\Users\samuelzainali\Documents\GitHub\medieinstitutet\testning\test-assignment-unittest\src\ts\models\Todo.ts">
         <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
