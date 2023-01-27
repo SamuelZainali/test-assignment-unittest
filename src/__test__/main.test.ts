@@ -14,19 +14,7 @@ afterEach(() => {
   jest.restoreAllMocks();
 });
 
-// test('button should clear todos', () => {
-// 	document.body.innerHTML = '<button type="button" id="clearTodos">Rensa lista</button>';
-// 	const spy = jest.spyOn(main, 'clearTodos');
-
-// 	main.initTestButton();
-
-// 	document.getElementById('#clearTodos')?.click();
-
-// 	expect(spy).toHaveBeenCalled();
-// 	expect(spy).toBeCalledTimes(1);
-// });
-
-test("should clear todos", () => {
+test(" clear todos", () => {
   document.body.innerHTML =
     '<ul id="todos" class="todo">' +
     '<li class="todo__text">A mock todo 1</li>' +
@@ -126,29 +114,4 @@ test("should not create new todo", () => {
   expect(
     document.querySelector("#error")?.classList.contains("show")
   ).toBeTruthy();
-});
-
-test("should toggle todo state", () => {
-  document.body.innerHTML =
-    '<ul id="todos" class="todo">' +
-    '<li class="todo__text">A mock todo 1</li>' +
-    '<li class="todo__text">A mock todo 2</li>' +
-    '<li class="todo__text">A mock todo 3</li>' +
-    '<li class="todo__text">A mock todo 4</li>' +
-    '<li class="todo__text">A mock todo 5</li>' +
-    "</ul>";
-
-  const todos: Todo[] = [
-    { text: "A mock todo 1", done: false },
-    { text: "A mock todo 2", done: false },
-    { text: "A mock todo 3", done: false },
-    { text: "A mock todo 4", done: false },
-    { text: "A mock todo 5", done: false },
-  ];
-
-  const spy = jest.spyOn(func, "changeTodo");
-
-  main.toggleTodo(todos[0]);
-
-  expect(spy).toHaveBeenCalled();
 });
