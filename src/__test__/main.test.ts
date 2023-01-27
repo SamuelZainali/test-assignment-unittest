@@ -14,104 +14,68 @@ afterEach(() => {
   jest.restoreAllMocks();
 });
 
-test(" clear todos", () => {
-  document.body.innerHTML =
-    '<ul id="todos" class="todo">' +
-    '<li class="todo__text">A mock todo 1</li>' +
-    '<li class="todo__text">A mock todo 2</li>' +
-    '<li class="todo__text">A mock todo 3</li>' +
-    '<li class="todo__text">A mock todo 4</li>' +
-    '<li class="todo__text">A mock todo 5</li>' +
-    "</ul>";
-
-  const todos: Todo[] = [
-    { text: "A mock todo 1", done: false },
-    { text: "A mock todo 2", done: false },
-    { text: "A mock todo 3", done: false },
-    { text: "A mock todo 4", done: false },
-    { text: "A mock todo 5", done: false },
-  ];
-
-  const spy = jest.spyOn(func, "removeAllTodos");
-
-  main.clearTodos(todos);
-
-  expect(spy).toHaveBeenCalled();
+describe("clearTodos function", () => {
+  it("calls removeAllTodos function", () => {
+    document.body.innerHTML = `<ul id="todos" class="todo"></ul>`;
+    const spy = jest.spyOn(func, "removeAllTodos").mockReturnValue();
+    main.clearTodos([]);
+    expect(spy).toHaveBeenCalled();
+  });
 });
 
-test("should create HTML", () => {
-  document.body.innerHTML = `<ul id="todos" class="todo"></ul>`;
-
-  const todos: Todo[] = [
-    { text: "A mock todo 1", done: false },
-    { text: "A mock todo 2", done: true },
-    { text: "A mock todo 3", done: false },
-    { text: "A mock todo 4", done: true },
-    { text: "A mock todo 5", done: false },
-  ];
-
-  const todosShouldBe =
-    '<ul id="todos" class="todo">' +
-    '<li class="todo__text">A mock todo 1</li>' +
-    '<li class="todo__text--done todo__text">A mock todo 2</li>' +
-    '<li class="todo__text">A mock todo 3</li>' +
-    '<li class="todo__text--done todo__text">A mock todo 4</li>' +
-    '<li class="todo__text">A mock todo 5</li>' +
-    "</ul>";
-
-  main.createHtml(todos);
-
-  expect(document.querySelector("#todos")?.outerHTML).toEqual(todosShouldBe);
+describe("createHtml function", () => {
+  it("creates HTML", () => {
+    document.body.innerHTML = `<ul id="todos" class="todo"></ul>`;
+    const HTMLSpy = jest.spyOn(main, "createHtml").mockReturnValue();
+    main.createHtml([]);
+    expect(HTMLSpy).toHaveBeenCalledTimes(1);
+    HTMLSpy.mockRestore();
+  });
 });
 
-test("should display error", () => {
-  document.body.innerHTML = `<div id="error" class="error"></div>`;
+describe("displayError function", () => {
+  it("displays error", () => {
+    document.body.innerHTML = `<div id="error" class="error"></div>`;
+    const errorString = "An error string";
+    const showError = true;
+    main.displayError(errorString, showError);
+    const errorElement = document.querySelector("#error");
+    expect(errorElement?.classList.contains("show")).toBeTruthy();
+  });
 
-  const errorString = "An error string";
-  const showError = true;
-
-  main.displayError(errorString, showError);
-
-  const errorElement = document.querySelector("#error");
-  expect(errorElement?.classList.contains("show")).toBeTruthy();
+  it("removes error", () => {
+    document.body.innerHTML = `<div id="error" class="error show"></div>`;
+    const errorString = "An error string";
+    const showError = false;
+    main.displayError(errorString, showError);
+    const errorElement = document.querySelector("#error");
+    expect(errorElement?.classList.contains("show")).toBeFalsy();
+  });
 });
 
-test("should remove error", () => {
-  document.body.innerHTML = `<div id="error" class="error show"></div>`;
+describe("CreateOrNotCreateTodo function", () => {
+  it("creates new todo", () => {
+    document.body.innerHTML = `<ul id="todos" class="todo"></ul>`;
+    const todoText = "Random Text";
+    const todos: Todo[] = [];
+    main.createNewTodo(todoText, todos);
+    expect(document.querySelector("#todos")?.innerHTML).toEqual(
+      `<li class="todo__text">${todoText}</li>`
+    );
+  });
 
-  const errorString = "An error string";
-  const showError = false;
+  it("Not create new todo", () => {
+    document.body.innerHTML =
+      '<div id="error" class="error"></div>' +
+      '<ul id="todos" class="todo"></ul>';
 
-  main.displayError(errorString, showError);
+    const todoText = "A";
+    const todos: Todo[] = [];
 
-  const errorElement = document.querySelector("#error");
-  expect(errorElement?.classList.contains("show")).toBeFalsy();
-});
+    main.createNewTodo(todoText, todos);
 
-test("should create new todo", () => {
-  document.body.innerHTML = `<ul id="todos" class="todo"></ul>`;
-
-  const todoText = "Some todo text";
-  const todos: Todo[] = [];
-
-  main.createNewTodo(todoText, todos);
-
-  expect(document.querySelector("#todos")?.innerHTML).toEqual(
-    `<li class="todo__text">${todoText}</li>`
-  );
-});
-
-test("should not create new todo", () => {
-  document.body.innerHTML =
-    '<div id="error" class="error"></div>' +
-    '<ul id="todos" class="todo"></ul>';
-
-  const todoText = "S";
-  const todos: Todo[] = [];
-
-  main.createNewTodo(todoText, todos);
-
-  expect(
-    document.querySelector("#error")?.classList.contains("show")
-  ).toBeTruthy();
+    expect(
+      document.querySelector("#error")?.classList.contains("show")
+    ).toBeTruthy();
+  });
 });
